@@ -1,5 +1,13 @@
-import { Link } from 'react-router-dom';
+import { useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 export const BackLink = ({ to }) => {
-  return <Link to={to}>Go back</Link>;
+  const location = useLocation();
+  const backLinkHref = useRef(location.state?.from ?? '/movies');
+
+  return (
+    <button>
+      <Link to={backLinkHref.current}>Go back</Link>
+    </button>
+  );
 };

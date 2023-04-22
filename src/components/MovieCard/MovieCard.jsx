@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { fetchMovieDetails } from 'helpers/FetchAPI';
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
@@ -41,7 +42,9 @@ const MovieCard = () => {
           </li>
         </ul>
       </AdditionalInfo>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

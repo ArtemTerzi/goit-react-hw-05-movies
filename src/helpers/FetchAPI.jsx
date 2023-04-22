@@ -46,6 +46,6 @@ export const fetchMoviesByQuery = async query => {
       query,
     },
   });
-  console.log(response.data.results);
+
   return response.data.results;
 };
