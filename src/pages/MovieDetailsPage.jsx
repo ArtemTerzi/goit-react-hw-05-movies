@@ -1,5 +1,5 @@
-import { BackLink } from 'components/BackLink/BackLink';
-import MovieCard from 'components/MovieCard/MovieCard';
+import BackLink from 'components/BackLink';
+import MovieCard from 'components/MovieCard';
 
 const MovieDetailsPage = () => {
   return (
