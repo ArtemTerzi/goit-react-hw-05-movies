@@ -12,7 +12,6 @@ const SearchBar = () => {
   useEffect(() => {
     if (searchParams === '') return;
 
-    const query = searchParams.get('query') ?? '';
     setInputValue(searchParams.get('query') ?? '');
 
     async function fetchMovieList() {
