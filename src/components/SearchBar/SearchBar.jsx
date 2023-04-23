@@ -5,15 +5,18 @@ import { Button, Input, ListItem } from './SearchBar.styled';
 
 const SearchBar = () => {
   const [movies, setMovies] = useState([]);
+  const [inputValue, setInputValue] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  const query = searchParams.get('query') ?? '';
 
   useEffect(() => {
-    if (query === '') return;
+    if (searchParams === '') return;
+
+    const query = searchParams.get('query') ?? '';
+    setInputValue(searchParams.get('query') ?? '');
 
     async function fetchMovieList() {
-      const movieList = await fetchMoviesByQuery(query);
+      const movieList = await fetchMoviesByQuery(searchParams.get('query'));
       setMovies(movieList);
     }
 
@@ -23,21 +26,24 @@ const SearchBar = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const query = e.target.elements.query.value;
-    setSearchParams(`query=${query}`);
-    fetchMoviesByQuery(query).then(setMovies).catch(console.error);
+    const query = inputValue !== '' ? { query: inputValue } : {};
+    setSearchParams(query);
+    fetchMoviesByQuery(inputValue).then(setMovies).catch(console.error);
   };
 
-  const handleChange = e => {
-    const query = e.target.value;
-    const queryParams = query !== '' ? { query } : {};
-    setSearchParams(queryParams);
+  const handleChange = ({ target: { value } }) => {
+    setInputValue(value);
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <Input name="query" type="text" value={query} onChange={handleChange} />
+        <Input
+          name="query"
+          type="text"
+          value={inputValue}
+          onChange={handleChange}
+        />
         <Button type="sumbit">Search</Button>
       </form>
       <ul>
